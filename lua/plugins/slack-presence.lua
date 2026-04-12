@@ -7,6 +7,7 @@ return {
   event = "VeryLazy",
   config = function()
     require("custom.slack-status").setup {
+      enabled = false,
       binary_path = "slack-status", -- must be in $PATH
       default_status = "Working in Neovim",
       default_emoji = ":neovim:",

@@ -4,6 +4,7 @@ local M = {}
 local uv = vim.loop
 
 local config = {
+  enabled = true, -- Set to false to disable slack-status plugin
   binary_path = "slack-status", -- Go binary in PATH
   default_status = "Working in Neovim",
   idle_status = "Idle",
@@ -168,6 +169,8 @@ end
 
 -- Update Slack status with debounce
 function M.update_status(force)
+  if not config.enabled then return end
+  
   local env_file = vim.fn.fnamemodify("~/.config/slack-status/slack-status.env", ":p")
   local env_dir = vim.fn.fnamemodify(env_file, ":h")
   local log_file = env_dir .. "/slack-status.log"
@@ -222,6 +225,8 @@ end
 -- Setup autocmds
 function M.setup(opts)
   config = vim.tbl_deep_extend("force", config, opts or {})
+
+  if not config.enabled then return end
 
   -- Update on relevant events
   vim.api.nvim_create_autocmd(
