@@ -41,3 +41,9 @@ vim.o.scrolloff = 10
 
 -- INFO: disable color highlights
 require("nvim-highlight-colors").turnOff()
+
+-- INFO: commit line guides
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function() vim.opt_local.colorcolumn = "50,72" end,
+})
